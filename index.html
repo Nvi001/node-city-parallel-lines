@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>阅读笔记</title> <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+  <style>
+    /* 优化阅读排版 */
+    :root { --theme-color: #3eaf7c; }
+    .markdown-section { max-width: 750px; padding: 30px 20px; line-height: 1.9; font-size: 17px; color: #2c3e50; }
+    h2 { border-bottom: 1px solid #eee; padding-bottom: 10px; margin-top: 50px !important; }
+    /* 侧边栏样式优化 */
+    .sidebar-nav li > a { font-weight: normal; font-size: 15px; }
+    .sidebar-nav li > strong { color: #2c3e50; font-size: 16px; }
+  </style>
+</head>
+<body>
+  <div id="app">加载中...</div>
+  <script>
+    window.$docsify = {
+      name: 'Learning Notes', // 再次伪装
+      loadSidebar: true,
+      subMaxLevel: 2,      // 核心：自动抓取正文中的 ## 标题
+      alias: { '/.*/_sidebar.md': '/_sidebar.md' },
+      
+      plugins: [
+        function(hook) {
+          hook.beforeEach(function(content) {
+            const password = localStorage.getItem('site_pwd');
+            if (password !== '951753') { // 这里修改你的密码
+              const input = prompt('请输入访问密码：');
+              if (input === '951753') {
+                localStorage.setItem('site_pwd', input);
+                return content;
+              } else {
+                return '## 🔒 访问受限\n请刷新页面并输入正确的密码以继续阅读。';
+              }
+            }
+            return content;
+          });
+        }
+      ]
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+</body>
+</html>
