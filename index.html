@@ -18,6 +18,8 @@
 <body>
   <div id="app">加载中...</div>
   <script>
+
+    
     window.$docsify = {
       name: 'Learning Notes', // 再次伪装
       loadSidebar: true,
@@ -28,14 +30,16 @@
         function(hook) {
           hook.beforeEach(function(content) {
             const password = localStorage.getItem('site_pwd');
-            if (password !== '951753') { // 这里修改你的密码
+            if (password !== '009b927906b97d1507451f45d795d55e') { // 这里修改你的密码
               const input = prompt('请输入访问密码：');
-              if (input === '951753') {
-                localStorage.setItem('site_pwd', input);
-                return content;
-              } else {
-                return '## 🔒 访问受限\n请刷新页面并输入正确的密码以继续阅读。';
+              if (input) {
+                const hashedInput = CryptoJS.MD5(input).toString();
+                if (hashedInput === '009b927906b97d1507451f45d795d55e') {
+                  localStorage.setItem('site_pwd', hashedInput);
+                  return content;
+                } 
               }
+              return '## 🔒 访问受限\n请刷新页面并输入正确的密码以继续阅读。';
             }
             return content;
           });
@@ -44,5 +48,6 @@
     }
   </script>
   <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 </body>
 </html>
