@@ -21,7 +21,7 @@
 
     
     window.$docsify = {
-      name: 'Learning Notes', // 再次伪装
+      name: 'Learning Notes',
       loadSidebar: true,
       subMaxLevel: 2,      // 核心：自动抓取正文中的 ## 标题
       alias: { '/.*/_sidebar.md': '/_sidebar.md' },
@@ -29,13 +29,13 @@
       plugins: [
         function(hook) {
           hook.beforeEach(function(content) {
-            const password = localStorage.getItem('site_pwd');
-            if (password !== '009b927906b97d1507451f45d795d55e') { // 这里修改你的密码
+            const password = sessionStorage.getItem('site_pwd');
+            if (password !== '009b927906b97d1507451f45d795d55e') {
               const input = prompt('请输入访问密码：');
               if (input) {
                 const hashedInput = CryptoJS.MD5(input).toString();
                 if (hashedInput === '009b927906b97d1507451f45d795d55e') {
-                  localStorage.setItem('site_pwd', hashedInput);
+                  sessionStorage.setItem('site_pwd', hashedInput);
                   return content;
                 } 
               }
